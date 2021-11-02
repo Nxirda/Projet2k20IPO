@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Projet2k20IPO">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/squelPartie1.zip!/" />
+      <root url="jar://$PROJECT_DIR$/InfiniteFroggerExample.jar!/" />
+      <root url="jar://$PROJECT_DIR$/squelPartie2.zip!/" />
+      <root url="jar://$PROJECT_DIR$/givenEnvironment.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FroggerExample(1).jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
