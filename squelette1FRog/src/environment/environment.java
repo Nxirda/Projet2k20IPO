@@ -6,7 +6,6 @@ import java.util.Iterator;
 import util.Case;
 import gameCommons.Game;
 import gameCommons.IEnvironment;
-//import environment.Lane;
 
 public class environment implements IEnvironment {
 
