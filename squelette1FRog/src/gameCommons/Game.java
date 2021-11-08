@@ -5,6 +5,7 @@ import java.util.Random;
 
 import graphicalElements.Element;
 import graphicalElements.IFroggerGraphics;
+import util.Case;
 
 public class Game {
 
@@ -12,7 +13,7 @@ public class Game {
 
 	// Caracteristique de la partie
 	public final int width;
-	public final int height;
+	public int height;
 	public final int minSpeedInTimerLoops;
 	public final double defaultDensity;
 
@@ -52,6 +53,10 @@ public class Game {
 		this.frog = frog;
 	}
 
+	public Case getFrog(){
+		return this.frog.getPosition();
+	}
+
 	/**
 	 * Lie l'objet environment a la partie
 	 * 
@@ -77,7 +82,8 @@ public class Game {
 	 */
 	public boolean testLose() {
 		if(! environment.isSafe(this.frog.getPosition())){
-			this.graphic.endGameScreen("You Lost !");
+			String s ="<html> You Lost Haha ! <br> You survived crossing " + (this.frog.getPosition().ord -1 )+ " roads ! </html>";
+			this.graphic.endGameScreen(s);
 			return true;
 		}
 		return false;
@@ -89,6 +95,8 @@ public class Game {
 	 * 
 	 * @return true si la partie est gagn�e
 	 */
+
+	/*
 	public boolean testWin() {
 		if(environment.isWinningPosition(this.frog.getPosition())){
 			this.graphic.endGameScreen("You Won !");
@@ -96,6 +104,8 @@ public class Game {
 		}
 		return false;
 	}
+	 */
+
 
 	/**
 	 * Actualise l'environnement, affiche la grenouille et verifie la fin de
@@ -104,9 +114,10 @@ public class Game {
 	public void update() {
 		graphic.clear();
 		environment.update();
-		this.graphic.add(new Element(frog.getPosition(), Color.GREEN));
+		Case c = new Case (this.frog.getAbsc(),0);
+		this.graphic.add(new Element(c, Color.GREEN));
 		testLose();
-		testWin();
+		//testWin();
 	}
 
 }

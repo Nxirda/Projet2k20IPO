@@ -11,35 +11,43 @@ public class environment implements IEnvironment {
 
     private ArrayList<Lane> routes;
     private Game game;
+    public int rounds;
 
     public environment(Game game) {
         this.game = game;
         this.routes = new ArrayList();
         this.routes.add(new Lane(game, 0, 0.0D));
 
-        for(int i = 1; i < game.height - 1; ++i) {
+        for(int i = 1; i < game.height ; ++i) {
             this.routes.add(new Lane(game, i));
         }
-
-        this.routes.add(new Lane(game, game.height - 1, 0.0D));
     }
 
     public boolean isSafe(Case c) {
-        return ((Lane)this.routes.get(c.ord)).isSafe(c);
+        if(this.routes.get(c.ord).isSafe(c)){
+            return true;
+        }
+        return false;
     }
-
+    /*
     public boolean isWinningPosition(Case c) {
         return c.ord == this.game.height - 1;
     }
+     */
 
     public void update() {
-        Iterator i = this.routes.iterator();
-
-        while(i.hasNext()) {
-            Lane lane = (Lane)i.next();
+        if (this.routes.size() <= this.game.height){
+            System.out.println("hauteur jeux" + this.game.height + "\n");
+            System.out.println("taille vecteur route" + this.routes.size() + "\n");
+            this.routes.add(new Lane(game,this.game.height));
+        }
+        for(int i=0;i<this.routes.size();i++) {
+            //System.out.println("taille vecteur route" + this.routes.size() + "\n");
+            Lane lane = this.routes.get(i);
             lane.update();
         }
 
     }
+
 }
 

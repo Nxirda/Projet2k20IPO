@@ -26,7 +26,17 @@ public class Lane {
 			this.moveCars(true);
 			this.mayAddCar();
 		}
+	}
 
+	public boolean hasCars(){
+		if(this.cars.isEmpty()){
+			return false;
+		}
+		return true;
+	}
+
+	public int getOrd(){
+		return this.ord;
 	}
 
 	public Lane(Game game, int ord) {
@@ -42,6 +52,10 @@ public class Lane {
 			this.mayAddCar();
 			this.timer = 0;
 		}
+	}
+
+	public void setOrd(int ord){
+		this.ord = ord;
 	}
 
 		// TODO
@@ -82,38 +96,32 @@ public class Lane {
 				return false;
 			}
 		}
-
 		return true;
 	}
 
 	private void moveCars(boolean b) {
 		Iterator i = this.cars.iterator();
-
 		while(i.hasNext()) {
 			Car car = (Car) i.next();
 			car.move(b);
 		}
-
 		this.removeOldCars();
 	}
 
 	private void removeOldCars() {
 		ArrayList<Car> toBeRemoved = new ArrayList();
 		Iterator i = this.cars.iterator();
-
 		Car c;
 		while(i.hasNext()) {
 			c = (Car) i.next();
-			if (!c.estSurTerrain()) {
+			if (!c.estSurTerrain() || c.getOrd() < this.game.getFrog().ord - 5) {
 				toBeRemoved.add(c);
 			}
 		}
-
 		for(int i2=0; i2 < toBeRemoved.size(); i2++){
 			c = toBeRemoved.get(i2);
 			this.cars.remove(c);
 		}
-
 	}
 
 	private Case premiereCase() {

@@ -5,11 +5,11 @@ import util.Case;
 public interface IEnvironment {
 
 	/**
-	 * Teste si une case est sure, c'est à dire que la grenouille peut s'y poser
+	 * Teste si une case est sure, c'est ï¿½ dire que la grenouille peut s'y poser
 	 * sans mourir
 	 * 
 	 * @param c
-	 *            la case à tester
+	 *            la case ï¿½ tester
 	 * @return vrai s'il n'y a pas danger
 	 */
 	public boolean isSafe(Case c);
@@ -20,10 +20,11 @@ public interface IEnvironment {
 	 * @param c
 	 * @return vrai si la case est une case de victoire
 	 */
+	/*
 	public boolean isWinningPosition(Case c);
-
+	*/
 	/**
-	 * Effectue une étape d'actualisation de l'environnement
+	 * Effectue une ï¿½tape d'actualisation de l'environnement
 	 */
 	public void update();
 

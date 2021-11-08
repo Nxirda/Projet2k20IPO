@@ -17,6 +17,10 @@ public class Frog implements IFrog {
 		this.dir = Direction.up;
 	}
 
+	public int getAbsc() {
+		return this.maCase.absc;
+	}
+
 	public Case getPosition(){
 		return this.maCase;
 	}
@@ -26,21 +30,21 @@ public class Frog implements IFrog {
 	}
 
 	public void move(Direction key){
-		if (key == Direction.up && this.maCase.ord +1 <= this.game.height){
+		if (key == Direction.up){// && this.maCase.ord +1 <= this.game.height){
 			this.maCase = new Case (this.maCase.absc, this.maCase.ord +1);
-			this.dir = Direction.up;
+			this.game.height ++;
 		}
+
 		if (key == Direction.down && this.maCase.ord -1 >= 0){
 			this.maCase = new Case (this.maCase.absc, this.maCase.ord -1);
-			this.dir = Direction.down;
+			this.game.height --;
 		}
+
 		if (key == Direction.right && this.maCase.absc +1 <= this.game.width-1){
 			this.maCase = new Case (this.maCase.absc +1, this.maCase.ord);
-			this.dir = Direction.right;
 		}
 		if (key == Direction.left && this.maCase.absc -1 >= 0){
 			this.maCase = new Case (this.maCase.absc -1, this.maCase.ord);
-			this.dir = Direction.left;
 		}
 	}
 

@@ -16,9 +16,16 @@ public class Car {
 
 	public Car(Game game,Case lP, boolean lTR){
 		this.game = game;
-		this. leftPosition = new Case (lTR ? lP.absc - this.length : lP.absc, lP.ord);
+		this.leftPosition = new Case (lTR ? lP.absc - this.length : lP.absc, lP.ord);
 		this.leftToRight = lTR;
 		this.length =  game.randomGen.nextInt(3) + 1;
+	}
+
+	public int getOrd(){
+		return this.leftPosition.ord;
+	}
+	public void setOrd(int i){
+		this.leftPosition = new Case (this.leftPosition.absc,i);
 	}
 	
 	public void move(boolean bool){
@@ -41,15 +48,14 @@ public class Car {
 	}
 	
 	
-	/* Fourni : addToGraphics() permettant d'ajouter un element graphique correspondant a la voiture*/
+	/* Fourni : addToGraphics() permettant d'ajouter un element graphique correspondant a la voiture */
 	private void addToGraphics() {
 		for (int i = 0; i < length; i++) {
 			Color color = colorRtL;
 			if (this.leftToRight){
 				color = colorLtR;
 			}
-			game.getGraphic()
-					.add(new Element(leftPosition.absc + i, leftPosition.ord, color));
+			game.getGraphic().add(new Element(leftPosition.absc + i, leftPosition.ord - this.game.getFrog().ord, color));
 		}
 	}
 
