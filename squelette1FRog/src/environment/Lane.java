@@ -12,7 +12,7 @@ public class Lane {
 	private int speed;
 	private ArrayList<Car> cars = new ArrayList<>();
 	private boolean leftToRight;
-	private double density;
+	double density;
 	private int timer;
 
 	public Lane(Game game, int ord, double density) {
@@ -27,6 +27,7 @@ public class Lane {
 			this.mayAddCar();
 		}
 	}
+
 
 	public boolean hasCars(){
 		if(this.cars.isEmpty()){
@@ -140,6 +141,10 @@ public class Lane {
 
 	public String toString() {
 		return "Lane [ord=" + this.ord + ", cars=" + this.cars + "]";
+	}
+
+	public void setDensity(double d){
+		density = d;
 	}
 
 }

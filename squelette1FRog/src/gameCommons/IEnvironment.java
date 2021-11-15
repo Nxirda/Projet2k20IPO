@@ -28,4 +28,10 @@ public interface IEnvironment {
 	 */
 	public void update();
 
+	public void clear();
+
+	public void setDensity(double density);
+
+	public void setGame(Game game);
+
 }

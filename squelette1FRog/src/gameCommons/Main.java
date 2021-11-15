@@ -1,9 +1,11 @@
 package gameCommons;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.TimeUnit;
 
-import javax.swing.Timer;
+import javax.swing.*;
 
 import frog.Frog;
 import environment.environment;
@@ -12,6 +14,7 @@ import graphicalElements.IFroggerGraphics;
 
 public class Main {
 
+
 	public static void main(String[] args) {
 
 		//Caract�ristiques du jeu
@@ -19,12 +22,19 @@ public class Main {
 		int height = 20;
 		int tempo = 100;
 		int minSpeedInTimerLoops = 5;
-		double defaultDensity = 0.2;
 		
 		//Cr�ation de l'interface graphique
 		IFroggerGraphics graphic = new FroggerGraphic(width, height);
 		//Cr�ation de la partie
-		Game game = new Game(graphic, width, height, minSpeedInTimerLoops, defaultDensity);
+		double defaultDensity1 = graphic.getDensity();
+		//Difficulty one
+		//Game game1 = new Game(graphic, width, height, minSpeedInTimerLoops, 0.1D);
+		//Difficulty two
+		Game game2 = new Game(graphic, width, height, minSpeedInTimerLoops, defaultDensity1);
+		//Difficulty three
+		//Game game3 = new Game(graphic, width, height, minSpeedInTimerLoops, 0.4D);
+
+		Game game = game2;
 		//Cr�ation et liason de la grenouille
 		IFrog frog = new Frog(game);
 		game.setFrog(frog);
@@ -34,9 +44,43 @@ public class Main {
 		game.setEnvironment(env);
 				
 		//Boucle principale : l'environnement s'actualise tous les tempo milisecondes
-		Timer timer = new Timer(tempo, new ActionListener() {
+		Timer timer = new Timer(tempo, new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(graphic.getDensity() != game.defaultDensity){
+					game.setDensity(graphic.getDensity());
+					String i = ""+graphic.getDensity();
+					switch (i) {
+						case ("0.1"):
+							System.out.println("You restarted in difficulty 1" + " densite de "+game.defaultDensity);
+							env.setGame(game);
+							game.restart(game.defaultDensity);
+							break;
+						case ("0.2"):
+							System.out.println("You restarted in difficulty 2" + " densite de "+game.defaultDensity);
+							env.setGame(game);
+							game.restart(game.defaultDensity);
+							break;
+						case ("0.5"):
+							System.out.println("You restarted in difficulty 3" + " densite de "+game.defaultDensity);
+							env.setGame(game);
+							game.restart(game.defaultDensity);
+							break;
+					}
+				}
+				if(frog.getRestart() == true){
+					try {
+						Thread.sleep(5000);
+					}catch (InterruptedException ie){
+					}
+					frog.setRestart(false);
+					game.setDensity(graphic.getDensity());
+					env.setGame(game);
+					game.restart(game.defaultDensity);
+					graphic.restart();
+
+
+				}
 				game.update();
 				graphic.repaint();
 			}

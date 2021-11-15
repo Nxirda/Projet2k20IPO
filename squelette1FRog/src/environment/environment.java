@@ -19,7 +19,12 @@ public class environment implements IEnvironment {
         this.routes.add(new Lane(game, 0, 0.0D));
 
         for(int i = 1; i < game.height ; ++i) {
-            this.routes.add(new Lane(game, i));
+            if(i % 5 == 0){
+                this.routes.add(new Lane(game,i,0.0D));
+            }
+            else {
+                this.routes.add(new Lane(game, i));
+            }
         }
     }
 
@@ -37,16 +42,34 @@ public class environment implements IEnvironment {
 
     public void update() {
         if (this.routes.size() <= this.game.height){
-            System.out.println("hauteur jeux" + this.game.height + "\n");
-            System.out.println("taille vecteur route" + this.routes.size() + "\n");
-            this.routes.add(new Lane(game,this.game.height));
+            //System.out.println("hauteur jeux" + this.game.height + "\n");
+            //System.out.println("taille vecteur route" + this.routes.size() + "\n");
+            this.routes.add(new Lane(game,this.game.height, this.game.defaultDensity));
         }
         for(int i=0;i<this.routes.size();i++) {
             //System.out.println("taille vecteur route" + this.routes.size() + "\n");
+            if(i%5 == 0 || i == 0){
+                routes.get(i).setDensity(0.0D);
+                routes.get(i).update();
+            }
             Lane lane = this.routes.get(i);
             lane.update();
         }
 
+    }
+
+    public void clear(){
+        this.routes = new ArrayList();
+    }
+
+    public void setDensity(double density){
+        for (Lane lane : routes) {
+            lane.setDensity(density);
+        }
+    }
+
+    public void setGame(Game game){
+        this.game = game;
     }
 
 }

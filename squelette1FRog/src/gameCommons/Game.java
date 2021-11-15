@@ -6,7 +6,6 @@ import java.util.Random;
 import graphicalElements.Element;
 import graphicalElements.IFroggerGraphics;
 import util.Case;
-
 public class Game {
 
 	public final Random randomGen = new Random();
@@ -15,7 +14,7 @@ public class Game {
 	public final int width;
 	public int height;
 	public final int minSpeedInTimerLoops;
-	public final double defaultDensity;
+	public double defaultDensity;
 
 	// Lien aux objets utilis�s
 	private IEnvironment environment;
@@ -43,6 +42,11 @@ public class Game {
 		this.minSpeedInTimerLoops = minSpeedInTimerLoop;
 		this.defaultDensity = defaultDensity;
 	}
+
+	public void setDensity(double D){
+		this.defaultDensity = D;
+	}
+
 
 	/**
 	 * Lie l'objet frog � la partie
@@ -83,6 +87,8 @@ public class Game {
 	public boolean testLose() {
 		if(! environment.isSafe(this.frog.getPosition())){
 			String s ="<html> You Lost Haha ! <br> You survived crossing " + (this.frog.getPosition().ord -1 )+ " roads ! </html>";
+			graphic.clear();
+			frog.setLife(false);
 			this.graphic.endGameScreen(s);
 			return true;
 		}
@@ -120,4 +126,19 @@ public class Game {
 		//testWin();
 	}
 
+	public void restart(double density){
+		graphic.clear();
+		setDensity(density);
+		environment.setDensity(density);
+		frog.setMaCase(new Case((width/2),0));
+		environment.update();
+		graphic.repaint();
+	}
+
+	/*
+	public void restart(){
+		graphic.clear();
+		Game game = new game();
+	}
+	*/
 }

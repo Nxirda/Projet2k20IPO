@@ -16,7 +16,9 @@ public interface IFrog {
 	 * @return
 	 */
 	public Direction getDirection();
-	
+
+
+	public void setGame(Game game);
 	/**
 	 * D�place la grenouille dans la direction donn�e et teste la fin de partie
 	 * @param key
@@ -24,5 +26,15 @@ public interface IFrog {
 	public void move(Direction key);
 
 	public int getAbsc();
+
+	public void setLife(Boolean b);
+
+	public void setMaCase(Case case1);
+
+	public boolean getEstEnVie();
+
+	public void setRestart(boolean b);
+
+	public boolean getRestart();
 
 }
