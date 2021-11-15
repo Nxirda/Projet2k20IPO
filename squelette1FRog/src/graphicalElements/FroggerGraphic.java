@@ -22,6 +22,7 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 	private JFrame frame;
 	public int minSpeedInTimerLoops = 5;
 	public double defaultDensity = 0.2;
+	public int numberOfRestarts = 0;
 
 	public FroggerGraphic(int width, int height) {
 		JFrame frame = new JFrame();
@@ -82,7 +83,6 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 		Restart.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				clear();
 				defaultDensity = 0.2;
 				System.out.println("Game restarted with OG parameters");
 				frog.setLife(true);
@@ -158,6 +158,17 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 	public void endGameScreen(String s) {
 		frame.remove(this);
 		JLabel label = new JLabel(s);
+		frame.getContentPane().removeAll();
+		label.setFont(new Font("Verdana", 1, 20));
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setSize(this.getSize());
+		frame.getContentPane().add(label);
+		frame.repaint();
+	}
+
+	public void clearEndGameScreen(String s){
+		frame.remove(this);
+		JLabel label = new JLabel(s);
 		label.setFont(new Font("Verdana", 1, 20));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setSize(this.getSize());
@@ -166,45 +177,27 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 	}
 
 	public void restart(){
+		clear();
+		numberOfRestarts ++;
 		frame.remove(this);
-		JFrame frame = new JFrame();
-		this.width = width;
-		this.height = height;
 		elementsToDisplay = new ArrayList<Element>();
 
 		setBackground(Color.GRAY);
 		setPreferredSize(new Dimension(width * pixelByCase, height * pixelByCase));
-
-		this.frame = new JFrame("Frogger");
-		//part for the menu
-
-		JMenuBar menu_bar1 = new JMenuBar();
-		JMenu menu1 = new JMenu("Selection");
-
-		//Different choices
-		JMenuItem Difficulte1 = new JMenuItem("Difficulté_1");
-		JMenuItem Difficulte2 = new JMenuItem("Difficulté_2");
-		JMenuItem Difficulte3 = new JMenuItem("Difficulté_3");
-		JMenuItem Restart = new JMenuItem("Restart");
-
-		//Add choices to menu
-		menu1.add(Difficulte1);
-		menu1.add(Difficulte2);
-		menu1.add(Difficulte3);
-		menu1.add(Restart);
-		menu_bar1.add(menu1);
-		frame.setJMenuBar(menu_bar1);
 
 		this.frame = frame;
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().add(this);
 		frame.pack();
 		frame.setVisible(true);
-		frame.addKeyListener(this);
 	}
 
 	public void setFrame(JFrame f){
 		this.frame = f;
+	}
+
+	public int getNumberOfRestarts(){
+		return numberOfRestarts;
 	}
 
 }

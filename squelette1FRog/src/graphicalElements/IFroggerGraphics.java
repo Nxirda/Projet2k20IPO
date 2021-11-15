@@ -39,4 +39,8 @@ public interface IFroggerGraphics {
     public double getDensity();
 
     public void restart();
+
+    public int getNumberOfRestarts();
+
+    public void clearEndGameScreen(String s);
 }

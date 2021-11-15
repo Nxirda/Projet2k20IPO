@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.*;
+import util.Case;
 
 import frog.Frog;
 import environment.environment;
@@ -13,6 +14,7 @@ import graphicalElements.FroggerGraphic;
 import graphicalElements.IFroggerGraphics;
 
 public class Main {
+
 
 
 	public static void main(String[] args) {
@@ -70,15 +72,23 @@ public class Main {
 				}
 				if(frog.getRestart() == true){
 					try {
-						Thread.sleep(5000);
+						Thread.sleep(500);
 					}catch (InterruptedException ie){
 					}
+					//System.out.println(frog.getPosition().ord);
 					frog.setRestart(false);
 					game.setDensity(graphic.getDensity());
+					//game = new Game(graphic, width, height, minSpeedInTimerLoops, defaultDensity1);
+					game.setGame(new Game(graphic, width, height, minSpeedInTimerLoops, defaultDensity1));
 					env.setGame(game);
-					game.restart(game.defaultDensity);
+					//game.restart(game.defaultDensity);
+					//graphic.setFrog(frog);
+					frog.setMaCase(new Case(width/2,0));
+					game.setFrog(frog);
+					graphic.setFrog(frog);
 					graphic.restart();
-
+					game.update();
+					//System.out.println(frog.getPosition().ord);
 
 				}
 				game.update();

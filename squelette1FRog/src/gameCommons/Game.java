@@ -1,11 +1,14 @@
 package gameCommons;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.Random;
 
 import graphicalElements.Element;
 import graphicalElements.IFroggerGraphics;
 import util.Case;
+
+import javax.swing.*;
+
 public class Game {
 
 	public final Random randomGen = new Random();
@@ -15,6 +18,8 @@ public class Game {
 	public int height;
 	public final int minSpeedInTimerLoops;
 	public double defaultDensity;
+	public int score = 0;
+	public int gameRestarts = 0;
 
 	// Lien aux objets utilis�s
 	private IEnvironment environment;
@@ -46,7 +51,13 @@ public class Game {
 	public void setDensity(double D){
 		this.defaultDensity = D;
 	}
-
+	public Game getGame(){
+		return this;
+	}
+	public void setGame(Game g){
+		this.graphic = g.graphic;
+		this.defaultDensity = g.defaultDensity;
+	}
 
 	/**
 	 * Lie l'objet frog � la partie
@@ -86,11 +97,20 @@ public class Game {
 	 */
 	public boolean testLose() {
 		if(! environment.isSafe(this.frog.getPosition())){
-			String s ="<html> You Lost Haha ! <br> You survived crossing " + (this.frog.getPosition().ord -1 )+ " roads ! </html>";
 			graphic.clear();
+			String s ="<html> You Lost Haha ! <br> You survived crossing " + (this.score)+ " roads ! </html>";
 			frog.setLife(false);
+			/*
+			if(gameRestarts < graphic.getNumberOfRestarts()){
+				gameRestarts ++;
+				graphic.clearEndGameScreen(s);
+				return true;
+			}else {
+				this.graphic.endGameScreen(s);
+				return true;
+			}
+			 */
 			this.graphic.endGameScreen(s);
-			return true;
 		}
 		return false;
 	}
@@ -127,12 +147,16 @@ public class Game {
 	}
 
 	public void restart(double density){
+		/*
+		this.score =0;
 		graphic.clear();
 		setDensity(density);
 		environment.setDensity(density);
 		frog.setMaCase(new Case((width/2),0));
 		environment.update();
 		graphic.repaint();
+
+		 */
 	}
 
 	/*
