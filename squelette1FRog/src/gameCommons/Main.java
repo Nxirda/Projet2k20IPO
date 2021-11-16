@@ -76,7 +76,8 @@ public class Main {
 					}catch (InterruptedException ie){
 					}
 					//System.out.println(frog.getPosition().ord);
-					frog.setRestart(false);
+					//System.out.println(frog.getRestart());
+					game.score = 0;
 					game.setDensity(graphic.getDensity());
 					//game = new Game(graphic, width, height, minSpeedInTimerLoops, defaultDensity1);
 					game.setGame(new Game(graphic, width, height, minSpeedInTimerLoops, defaultDensity1));
@@ -84,13 +85,18 @@ public class Main {
 					//game.restart(game.defaultDensity);
 					//graphic.setFrog(frog);
 					frog.setMaCase(new Case(width/2,0));
+					//frog.setRestart(false);
+					graphic.restart();
+					frog.setRestart(false);
 					game.setFrog(frog);
 					graphic.setFrog(frog);
-					graphic.restart();
 					game.update();
+					//System.out.println(frog.getEstEnVie());
 					//System.out.println(frog.getPosition().ord);
 
+
 				}
+				//System.out.println(frog.getEstEnVie());
 				game.update();
 				graphic.repaint();
 			}

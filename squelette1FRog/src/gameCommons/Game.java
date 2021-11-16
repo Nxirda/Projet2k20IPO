@@ -100,16 +100,6 @@ public class Game {
 			graphic.clear();
 			String s ="<html> You Lost Haha ! <br> You survived crossing " + (this.score)+ " roads ! </html>";
 			frog.setLife(false);
-			/*
-			if(gameRestarts < graphic.getNumberOfRestarts()){
-				gameRestarts ++;
-				graphic.clearEndGameScreen(s);
-				return true;
-			}else {
-				this.graphic.endGameScreen(s);
-				return true;
-			}
-			 */
 			this.graphic.endGameScreen(s);
 		}
 		return false;

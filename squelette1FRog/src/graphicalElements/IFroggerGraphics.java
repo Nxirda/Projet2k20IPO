@@ -42,5 +42,5 @@ public interface IFroggerGraphics {
 
     public int getNumberOfRestarts();
 
-    public void clearEndGameScreen(String s);
+    //public void clearEndGameScreen(String s);
 }

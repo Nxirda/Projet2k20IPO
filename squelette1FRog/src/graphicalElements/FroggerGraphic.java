@@ -80,16 +80,19 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 			}
 		});
 
+		/*
 		Restart.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				defaultDensity = 0.2;
-				System.out.println("Game restarted with OG parameters");
-				frog.setLife(true);
-				frog.setRestart(true);
-				clear();
+					defaultDensity = 0.2;
+					System.out.println("Game restarted with OG parameters");
+					frog.setLife(true);
+					frog.setRestart(true);
+					clear();
 			}
 		});
+
+		 */
 
 		this.frame = frame;
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -159,12 +162,15 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 		frame.remove(this);
 		JLabel label = new JLabel(s);
 		frame.getContentPane().removeAll();
+		JButton btn = ajouteBoutton();
 		label.setFont(new Font("Verdana", 1, 20));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setSize(this.getSize());
 		frame.getContentPane().add(label);
+		//frame.addKeyListener(btn);
 		frame.repaint();
 	}
+
 
 	public void clearEndGameScreen(String s){
 		frame.remove(this);
@@ -185,11 +191,14 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 		setBackground(Color.GRAY);
 		setPreferredSize(new Dimension(width * pixelByCase, height * pixelByCase));
 
-		this.frame = frame;
+		this.frame = new JFrame("Frogger");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().add(this);
 		frame.pack();
 		frame.setVisible(true);
+		frog.setRestart(true);
+		frog.setLife(true);
+		frame.addKeyListener(this);
 	}
 
 	public void setFrame(JFrame f){
@@ -198,6 +207,33 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 
 	public int getNumberOfRestarts(){
 		return numberOfRestarts;
+	}
+
+
+	public JButton ajouteBoutton() {
+		JButton btn = null;
+		btn = new JButton("Rejouer");
+		btn.setBounds(0, 0, 100, 40);
+		frame.getContentPane().add(btn);
+		btn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				/*
+				defaultDensity = 0.2;
+				System.out.println("Game restarted with OG parameters");
+				clear();
+				//frog.setLife(true);
+				frog.setRestart(true);
+				System.out.println(frog.getRestart());
+
+				 */
+				restart();
+			}
+		});
+		return btn;
+		//System.out.println(frog.getRestart());
+		//System.out.println("vie grenouille = " + frog.getEstEnVie());
+
 	}
 
 }
