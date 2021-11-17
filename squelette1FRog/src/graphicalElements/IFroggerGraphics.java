@@ -34,13 +34,10 @@ public interface IFroggerGraphics {
      */
     public void endGameScreen(String message);
 
-    public void setMenuBar(JMenuBar j);
-
     public double getDensity();
 
     public void restart();
 
-    public int getNumberOfRestarts();
+    public void setFrame(JFrame f);
 
-    //public void clearEndGameScreen(String s);
 }

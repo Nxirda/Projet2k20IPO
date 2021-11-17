@@ -24,8 +24,11 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 	public double defaultDensity = 0.2;
 	public int numberOfRestarts = 0;
 
+	public void setFrame(JFrame f){
+		this.frame = f;
+	}
+
 	public FroggerGraphic(int width, int height) {
-		JFrame frame = new JFrame();
 		this.width = width;
 		this.height = height;
 		elementsToDisplay = new ArrayList<Element>();
@@ -80,27 +83,12 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 			}
 		});
 
-		/*
-		Restart.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-					defaultDensity = 0.2;
-					System.out.println("Game restarted with OG parameters");
-					frog.setLife(true);
-					frog.setRestart(true);
-					clear();
-			}
-		});
-
-		 */
-
 		this.frame = frame;
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().add(this);
 		frame.pack();
 		frame.setVisible(true);
 		frame.addKeyListener(this);
-
 	}
 
 	public void setDefaultDensity(double d){
@@ -117,10 +105,6 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 			g.setColor(e.color);
 			g.fillRect(pixelByCase * e.absc, pixelByCase * (height - 1 - e.ord), pixelByCase, pixelByCase - 1);
 		}
-	}
-
-	public void setMenuBar(JMenuBar j){
-		frame.setJMenuBar(j);
 	}
 
 	public void keyTyped(KeyEvent e) {
@@ -167,31 +151,17 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setSize(this.getSize());
 		frame.getContentPane().add(label);
-		//frame.addKeyListener(btn);
 		frame.repaint();
 	}
 
-
-	public void clearEndGameScreen(String s){
+	//a compléter, écran de début
+	public void selectionScreen(){
 		frame.remove(this);
-		JLabel label = new JLabel(s);
-		label.setFont(new Font("Verdana", 1, 20));
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setSize(this.getSize());
-		frame.getContentPane().add(label);
-		frame.repaint();
 	}
 
 	public void restart(){
-		clear();
-		numberOfRestarts ++;
-		frame.remove(this);
-		elementsToDisplay = new ArrayList<Element>();
-
-		setBackground(Color.GRAY);
-		setPreferredSize(new Dimension(width * pixelByCase, height * pixelByCase));
-
-		this.frame = new JFrame("Frogger");
+		frame.dispose();
+		setFrame(new JFrame("Frogger1234"));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().add(this);
 		frame.pack();
@@ -199,14 +169,6 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 		frog.setRestart(true);
 		frog.setLife(true);
 		frame.addKeyListener(this);
-	}
-
-	public void setFrame(JFrame f){
-		this.frame = f;
-	}
-
-	public int getNumberOfRestarts(){
-		return numberOfRestarts;
 	}
 
 
@@ -218,22 +180,11 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 		btn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				/*
-				defaultDensity = 0.2;
-				System.out.println("Game restarted with OG parameters");
-				clear();
-				//frog.setLife(true);
-				frog.setRestart(true);
-				System.out.println(frog.getRestart());
-
-				 */
+				numberOfRestarts ++;
 				restart();
 			}
 		});
 		return btn;
-		//System.out.println(frog.getRestart());
-		//System.out.println("vie grenouille = " + frog.getEstEnVie());
-
 	}
 
 }

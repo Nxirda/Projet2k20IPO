@@ -26,26 +26,28 @@ public class Main {
 		int minSpeedInTimerLoops = 5;
 		
 		//Cr�ation de l'interface graphique
-		IFroggerGraphics graphic = new FroggerGraphic(width, height);
-		//Cr�ation de la partie
-		double defaultDensity1 = graphic.getDensity();
-		//Difficulty one
-		//Game game1 = new Game(graphic, width, height, minSpeedInTimerLoops, 0.1D);
-		//Difficulty two
-		Game game2 = new Game(graphic, width, height, minSpeedInTimerLoops, defaultDensity1);
-		//Difficulty three
-		//Game game3 = new Game(graphic, width, height, minSpeedInTimerLoops, 0.4D);
 
+		IFroggerGraphics graphic = new FroggerGraphic(width, height);
+
+		//Cr�ation de la partie
+
+		double defaultDensity1 = graphic.getDensity();
+		Game game2 = new Game(graphic, width, height, minSpeedInTimerLoops, defaultDensity1);
 		Game game = game2;
+
 		//Cr�ation et liason de la grenouille
+
 		IFrog frog = new Frog(game);
 		game.setFrog(frog);
 		graphic.setFrog(frog);
+
 		//Cr�ation et liaison de l'environnement
+
 		IEnvironment env = new environment(game);
 		game.setEnvironment(env);
 				
 		//Boucle principale : l'environnement s'actualise tous les tempo milisecondes
+
 		Timer timer = new Timer(tempo, new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -75,28 +77,15 @@ public class Main {
 						Thread.sleep(500);
 					}catch (InterruptedException ie){
 					}
-					//System.out.println(frog.getPosition().ord);
-					//System.out.println(frog.getRestart());
 					game.score = 0;
 					game.setDensity(graphic.getDensity());
-					//game = new Game(graphic, width, height, minSpeedInTimerLoops, defaultDensity1);
 					game.setGame(new Game(graphic, width, height, minSpeedInTimerLoops, defaultDensity1));
 					env.setGame(game);
-					//game.restart(game.defaultDensity);
-					//graphic.setFrog(frog);
 					frog.setMaCase(new Case(width/2,0));
-					//frog.setRestart(false);
-					graphic.restart();
 					frog.setRestart(false);
 					game.setFrog(frog);
 					graphic.setFrog(frog);
-					game.update();
-					//System.out.println(frog.getEstEnVie());
-					//System.out.println(frog.getPosition().ord);
-
-
 				}
-				//System.out.println(frog.getEstEnVie());
 				game.update();
 				graphic.repaint();
 			}
