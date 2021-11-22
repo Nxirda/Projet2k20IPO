@@ -1,9 +1,10 @@
 package graphicalElements;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import frog.Frog;
 import gameCommons.IFrog;
+import gameCommons.IMatrix;
 import util.Direction;
 
 import java.awt.*;
@@ -11,7 +12,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
 import java.util.ArrayList;
+import java.util.Random;
+
 
 public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListener {
 	private ArrayList<Element> elementsToDisplay;
@@ -19,14 +23,11 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 	private int width;
 	private int height;
 	private IFrog frog;
+	private IMatrix matrix;
 	private JFrame frame;
-	public int minSpeedInTimerLoops = 5;
 	public double defaultDensity = 0.2;
 	public int numberOfRestarts = 0;
-
-	public void setFrame(JFrame f){
-		this.frame = f;
-	}
+	private int straw;
 
 	public FroggerGraphic(int width, int height) {
 		this.width = width;
@@ -35,68 +36,43 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 
 		setBackground(Color.GRAY);
 		setPreferredSize(new Dimension(width * pixelByCase, height * pixelByCase));
-
 		this.frame = new JFrame("Frogger");
-		//part for the menu
-
-		JMenuBar menu_bar1 = new JMenuBar();
-		JMenu menu1 = new JMenu("Selection");
-
-		//Different choices
-		JMenuItem Difficulte1 = new JMenuItem("Difficulté_1");
-		JMenuItem Difficulte2 = new JMenuItem("Difficulté_2");
-		JMenuItem Difficulte3 = new JMenuItem("Difficulté_3");
-		JMenuItem Restart = new JMenuItem("Restart");
-
-		//Add choices to menu
-		menu1.add(Difficulte1);
-		menu1.add(Difficulte2);
-		menu1.add(Difficulte3);
-		menu1.add(Restart);
-		menu_bar1.add(menu1);
-		frame.setJMenuBar(menu_bar1);
-
-
-
-		Difficulte1.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				clear();
-				defaultDensity = 0.1D;
-
-			}
-		});
-
-		Difficulte2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				clear();
-				defaultDensity = 0.2;
-			}
-		});
-
-		Difficulte3.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				clear();
-				defaultDensity = 0.5;
-			}
-		});
-
 		this.frame = frame;
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().add(this);
 		frame.pack();
+		//matrixGameScreen();
+		beforeGameScreen();
+		//elementsToDisplay.add(new Element(this.matrix.getMaCase(), Color.red));
 		frame.setVisible(true);
 		frame.addKeyListener(this);
 	}
 
-	public void setDefaultDensity(double d){
-		this.defaultDensity = d;
+	//Méthodes
+
+	public int getStraw(){
+		return straw;
 	}
+
+	public void setNumberOfRestarts(int i){
+		numberOfRestarts += i;
+	}
+
+	public int getNumberOfRestarts(){
+		return numberOfRestarts;
+	}
+
+	public void setFrame(JFrame f){
+		this.frame = f;
+	}
+
 
 	public double getDensity(){
 		return defaultDensity;
+	}
+
+	public ArrayList<Element> getElementsToDisplay(){
+		return elementsToDisplay;
 	}
 
 	public void paintComponent(Graphics g) {
@@ -142,6 +118,103 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 		this.frog = frog;
 	}
 
+
+	//partie gérant l'écran de début
+
+	public void beforeGameScreen() {
+		clear();
+		frame.dispose();
+		frame.getContentPane().removeAll();
+
+		//dimension game : 416,348
+
+		ImageIcon img = new ImageIcon("/Users/adri/Desktop/start-game2.jpg");
+		Image image = img.getImage();
+		Image newing = image.getScaledInstance(416, 348,  java.awt.Image.SCALE_SMOOTH);
+		img = new ImageIcon(newing);
+		JLabel back = new JLabel(img);
+		back.add(ajouteBoutton2());
+
+		JLabel label = new JLabel("Welcome to Frogger");
+		/*
+		Icon back1 = new ImageIcon("/Users/adri/Desktop/matrix-code.gif");
+		JLabel label = new JLabel(back1);
+		*/
+
+		//partie ecriture de welcome to frogger
+		label.setFont(new Font("Verdana", 1, 20));
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setForeground(Color.red);
+		label.setBounds(0,-125,100,100);
+		label.setSize(this.getSize());
+
+		frame.getContentPane().add(label);
+		frame.getContentPane().add(back);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.pack();
+		setFrame(frame);
+		frame.setVisible(true);
+
+		frame.repaint();
+	}
+
+	public JButton ajouteBoutton2(){
+		JButton btn = null;
+		btn = new JButton ("Difficulté 1");
+		btn.setForeground(Color.red);
+		btn.setBounds(25,280,100,25);
+		frame.getContentPane().add(btn);
+		btn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				straw = 1;
+				restart();
+			}
+		});
+		btn = new JButton ("Difficulté 2");
+		btn.setForeground(Color.red);
+		btn.setBounds(145,280,100,25);
+		frame.getContentPane().add(btn);
+		btn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				straw = 2;
+				restart();
+			}
+		});
+
+		btn = new JButton ("Difficulté 3");
+		btn.setForeground(Color.red);
+		btn.setBounds(265,280,100,25);
+		frame.getContentPane().add(btn);
+		btn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				straw = 3;
+				restart();
+			}
+		});
+		return btn;
+	}
+
+	//partie gérant l'écran de fin
+
+	public JButton ajouteBoutton() {
+		JButton btn = null;
+		btn = new JButton("Rejouer");
+		btn.setBounds(160,200,100,50);
+		frame.getContentPane().add(btn);
+		btn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				clear();
+				//numberOfRestarts ++;
+				restart();
+			}
+		});
+		return btn;
+	}
+
 	public void endGameScreen(String s) {
 		frame.remove(this);
 		JLabel label = new JLabel(s);
@@ -154,14 +227,36 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 		frame.repaint();
 	}
 
-	//a compléter, écran de début
-	public void selectionScreen(){
-		frame.remove(this);
+	public void matrixGameScreen(){
+		clear();
+		frame.dispose();
+		frame.getContentPane().removeAll();
+		Icon back1 = new ImageIcon("/Users/adri/Desktop/matrix-code.gif");
+		JLabel label = new JLabel(back1);
+		JLabel label2 = new JLabel("SYSTEM FAILURE");
+		label2.setSize(this.getSize());
+		label2.setForeground(Color.green);
+		label2.setHorizontalAlignment(SwingConstants.CENTER);
+		frame.getContentPane().add(label2);
+		frame.getContentPane().add(label);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.pack();
+		setFrame(frame);
+		frame.setVisible(true);
+		frame.repaint();
+		while(true){
+			Random random = new Random();
+			int nb;
+			nb = random.nextInt(255);
+			System.out.print(nb+".");
+		}
 	}
 
+
 	public void restart(){
+		clear();
 		frame.dispose();
-		setFrame(new JFrame("Frogger1234"));
+		setFrame(new JFrame("Frogger"));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().add(this);
 		frame.pack();
@@ -169,22 +264,6 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 		frog.setRestart(true);
 		frog.setLife(true);
 		frame.addKeyListener(this);
-	}
-
-
-	public JButton ajouteBoutton() {
-		JButton btn = null;
-		btn = new JButton("Rejouer");
-		btn.setBounds(0, 0, 100, 40);
-		frame.getContentPane().add(btn);
-		btn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				numberOfRestarts ++;
-				restart();
-			}
-		});
-		return btn;
 	}
 
 }

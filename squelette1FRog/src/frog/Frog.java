@@ -18,6 +18,7 @@ public class Frog implements IFrog {
 		this.maCase = new Case(game.width/2,0);
 		this.dir = Direction.up;
 		this.estEnVie = true;
+		this.restart = false;
 	}
 
 	public void setRestart(boolean b){
@@ -53,7 +54,7 @@ public class Frog implements IFrog {
 	}
 
 	public void move(Direction key){
-		if (key == Direction.up && estEnVie){// && this.maCase.ord +1 <= this.game.height){
+		if (key == Direction.up && estEnVie){
 			this.maCase = new Case (this.maCase.absc, this.maCase.ord +1);
 			this.game.height ++;
 			this.game.score ++;

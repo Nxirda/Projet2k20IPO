@@ -11,7 +11,6 @@ public class environment implements IEnvironment {
 
     private ArrayList<Lane> routes;
     private Game game;
-    public int rounds;
 
     public environment(Game game) {
         this.game = game;
@@ -42,20 +41,16 @@ public class environment implements IEnvironment {
 
     public void update() {
         if (this.routes.size() <= this.game.height){
-            //System.out.println("hauteur jeux" + this.game.height + "\n");
-            //System.out.println("taille vecteur route" + this.routes.size() + "\n");
             this.routes.add(new Lane(game,this.game.height, this.game.defaultDensity));
         }
         for(int i=0;i<this.routes.size();i++) {
-            //System.out.println("taille vecteur route" + this.routes.size() + "\n");
-            if(i%5 == 0 || i == 0){
+            if(i%5 == 0){
                 routes.get(i).setDensity(0.0D);
                 routes.get(i).update();
             }
             Lane lane = this.routes.get(i);
             lane.update();
         }
-
     }
 
     public void clear(){

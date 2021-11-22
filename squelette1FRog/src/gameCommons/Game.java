@@ -7,8 +7,6 @@ import graphicalElements.Element;
 import graphicalElements.IFroggerGraphics;
 import util.Case;
 
-import javax.swing.*;
-
 public class Game {
 
 	public final Random randomGen = new Random();
@@ -54,6 +52,7 @@ public class Game {
 	public Game getGame(){
 		return this;
 	}
+
 	public void setGame(Game g){
 		this.graphic = g.graphic;
 		this.defaultDensity = g.defaultDensity;
@@ -112,17 +111,6 @@ public class Game {
 	 * @return true si la partie est gagn�e
 	 */
 
-	/*
-	public boolean testWin() {
-		if(environment.isWinningPosition(this.frog.getPosition())){
-			this.graphic.endGameScreen("You Won !");
-			return true;
-		}
-		return false;
-	}
-	 */
-
-
 	/**
 	 * Actualise l'environnement, affiche la grenouille et verifie la fin de
 	 * partie.
@@ -133,26 +121,5 @@ public class Game {
 		Case c = new Case (this.frog.getAbsc(),0);
 		this.graphic.add(new Element(c, Color.GREEN));
 		testLose();
-		//testWin();
 	}
-
-	public void restart(double density){
-		/*
-		this.score =0;
-		graphic.clear();
-		setDensity(density);
-		environment.setDensity(density);
-		frog.setMaCase(new Case((width/2),0));
-		environment.update();
-		graphic.repaint();
-
-		 */
-	}
-
-	/*
-	public void restart(){
-		graphic.clear();
-		Game game = new game();
-	}
-	*/
 }

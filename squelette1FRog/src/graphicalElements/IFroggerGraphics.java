@@ -3,6 +3,7 @@ package graphicalElements;
 import gameCommons.IFrog;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public interface IFroggerGraphics {
 	
@@ -39,5 +40,17 @@ public interface IFroggerGraphics {
     public void restart();
 
     public void setFrame(JFrame f);
+
+    public void beforeGameScreen();
+
+    public int getNumberOfRestarts();
+
+    public void setNumberOfRestarts(int i);
+
+    public ArrayList<Element> getElementsToDisplay();
+
+    public int getStraw();
+
+    public void matrixGameScreen();
 
 }

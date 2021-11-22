@@ -15,10 +15,10 @@ public interface IFrog {
 	 * Donne la direction de la grenouille, c'est � dire de son dernier mouvement 
 	 * @return
 	 */
-	public Direction getDirection();
+	//public Direction getDirection();
 
 
-	public void setGame(Game game);
+	//public void setGame(Game game);
 	/**
 	 * D�place la grenouille dans la direction donn�e et teste la fin de partie
 	 * @param key
@@ -29,9 +29,9 @@ public interface IFrog {
 
 	public void setLife(Boolean b);
 
-	public void setMaCase(Case case1);
+	//public void setMaCase(Case case1);
 
-	public boolean getEstEnVie();
+	//public boolean getEstEnVie();
 
 	public void setRestart(boolean b);
 

@@ -50,6 +50,7 @@ public class Lane {
 			this.moveCars(false);
 		} else {
 			this.moveCars(true);
+			this.removeOldCars();
 			this.mayAddCar();
 			this.timer = 0;
 		}
