@@ -3,6 +3,7 @@ package environment;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import frog.Matrix;
 import util.Case;
 import gameCommons.Game;
 
@@ -11,23 +12,37 @@ public class Lane {
 	private int ord;
 	private int speed;
 	private ArrayList<Car> cars = new ArrayList<>();
+	private Matrix m;
 	private boolean leftToRight;
 	double density;
 	private int timer;
+	private boolean matrix = false;
 
-	public Lane(Game game, int ord, double density) {
+	public Lane(Game game, int ord, double density, boolean x) {
 		this.game = game;
 		this.ord = ord;
 		this.speed = game.randomGen.nextInt(game.minSpeedInTimerLoops) + 1;
 		this.leftToRight = game.randomGen.nextBoolean();
 		this.density = density;
-
-		for(int i = 0; i < 4 * game.width; ++i) {
+		this.matrix = x;
+		this.m = new Matrix(game, new Case(3,3));
+		//Matrixes.add(m);
+		for(int i = 0; i <  game.width; ++i) {
 			this.moveCars(true);
 			this.mayAddCar();
 		}
 	}
 
+	public Matrix getM(){
+		return this.m;
+	}
+
+	public void isMatrix(boolean x){
+		this.matrix = x;
+	}
+	public boolean getMatrx(){
+		return this.matrix;
+	}
 
 	public boolean hasCars(){
 		if(this.cars.isEmpty()){
@@ -40,12 +55,15 @@ public class Lane {
 		return this.ord;
 	}
 
-	public Lane(Game game, int ord) {
-		this(game, ord, game.defaultDensity);
+	public Lane(Game game, int ord, boolean x) {
+		this(game, ord, game.defaultDensity, x);
 	}
 
 	public void update() {
 		this.timer ++;
+		if(this.matrix == true) {
+			this.m.addToGraphics();
+		}
 		if (this.timer <= this.speed) {
 			this.moveCars(false);
 		} else {
@@ -88,6 +106,7 @@ public class Lane {
 			}
 		}
 	}
+
 
 	public boolean isSafe(Case pos) {
 		Iterator i = this.cars.iterator();

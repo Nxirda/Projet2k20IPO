@@ -3,6 +3,7 @@ package gameCommons;
 import java.awt.*;
 import java.util.Random;
 
+import frog.Frog;
 import graphicalElements.Element;
 import graphicalElements.IFroggerGraphics;
 import util.Case;
@@ -71,6 +72,10 @@ public class Game {
 		return this.frog.getPosition();
 	}
 
+	public IFrog donneFrog(){
+		return frog;
+	}
+
 	/**
 	 * Lie l'objet environment a la partie
 	 * 
@@ -103,6 +108,15 @@ public class Game {
 		}
 		return false;
 	}
+	public boolean testMatrix() {
+		if(environment.isInMatrix()){
+			graphic.clear();
+			String s ="<html> You Lost Haha ! <br> You survived crossing " + (this.score)+ " roads ! </html>";
+			frog.setLife(false);
+			this.graphic.matrixGameScreen();
+		}
+		return false;
+	}
 
 	/**
 	 * Teste si la partie est gagnee et lance un �cran de fin appropri� si tel
@@ -116,10 +130,13 @@ public class Game {
 	 * partie.
 	 */
 	public void update() {
-		graphic.clear();
-		environment.update();
-		Case c = new Case (this.frog.getAbsc(),0);
-		this.graphic.add(new Element(c, Color.GREEN));
-		testLose();
+		if(this.frog.getEstEnVie()) {
+			graphic.clear();
+			environment.update();
+			Case c = new Case(this.frog.getAbsc(), 0);
+			this.graphic.add(new Element(c, Color.GREEN));
+			testLose();
+			testMatrix();
+		}
 	}
 }

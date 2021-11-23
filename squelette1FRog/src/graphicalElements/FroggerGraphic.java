@@ -1,10 +1,11 @@
 package graphicalElements;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import java.net.InetAddress;
+
+import frog.Matrix;
 import gameCommons.IFrog;
-import gameCommons.IMatrix;
 import util.Direction;
 
 import java.awt.*;
@@ -13,8 +14,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Random;
 
 
 public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListener {
@@ -23,7 +24,7 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 	private int width;
 	private int height;
 	private IFrog frog;
-	private IMatrix matrix;
+	private Matrix matrix;
 	private JFrame frame;
 	public double defaultDensity = 0.2;
 	public int numberOfRestarts = 0;
@@ -128,7 +129,7 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 
 		//dimension game : 416,348
 
-		ImageIcon img = new ImageIcon("/Users/adri/Desktop/start-game2.jpg");
+		ImageIcon img = new ImageIcon("/Users/adri/IdeaProjects/Projet2k20IPO/squelette1FRog/src/Screens/start-game2.jpg");
 		Image image = img.getImage();
 		Image newing = image.getScaledInstance(416, 348,  java.awt.Image.SCALE_SMOOTH);
 		img = new ImageIcon(newing);
@@ -217,13 +218,24 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 
 	public void endGameScreen(String s) {
 		frame.remove(this);
-		JLabel label = new JLabel(s);
 		frame.getContentPane().removeAll();
-		JButton btn = ajouteBoutton();
+		JLabel label = new JLabel(s);
+
+		ImageIcon img = new ImageIcon("/Users/adri/IdeaProjects/Projet2k20IPO/squelette1FRog/src/Screens/engamescreen.png");
+		Image image = img.getImage();
+		Image newing = image.getScaledInstance(416, 348,  java.awt.Image.SCALE_SMOOTH);
+		img = new ImageIcon(newing);
+		JLabel back = new JLabel(img);
+		back.add(ajouteBoutton());
+
+		//JButton btn = ajouteBoutton();
 		label.setFont(new Font("Verdana", 1, 20));
+		label.setForeground(Color.blue);
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setSize(this.getSize());
 		frame.getContentPane().add(label);
+		frame.getContentPane().add(back);
+		frame.setVisible(true);
 		frame.repaint();
 	}
 
@@ -231,9 +243,24 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 		clear();
 		frame.dispose();
 		frame.getContentPane().removeAll();
-		Icon back1 = new ImageIcon("/Users/adri/Desktop/matrix-code.gif");
+		Icon back1 = new ImageIcon("/Users/adri/IdeaProjects/Projet2k20IPO/squelette1FRog/src/Screens/matrix-code.gif");
 		JLabel label = new JLabel(back1);
-		JLabel label2 = new JLabel("SYSTEM FAILURE");
+		String nomHote ;
+		String adresseIPLocale ;
+		JLabel label2 = new JLabel();
+		try{
+			InetAddress inetadr = InetAddress.getLocalHost();
+			//nom de machine
+			nomHote = (String) inetadr.getHostName();
+			System.out.println("Nom de la machine = "+nomHote );
+			//adresse ip sur le réseau
+			adresseIPLocale = (String) inetadr.getHostAddress();
+			System.out.println("Adresse IP locale = "+adresseIPLocale );
+			label2 = new JLabel("<html> System Failure <br> Nom de la machine : " +nomHote +"<br> Your IP adress is : " + adresseIPLocale +"</html>");
+
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
 		label2.setSize(this.getSize());
 		label2.setForeground(Color.green);
 		label2.setHorizontalAlignment(SwingConstants.CENTER);
@@ -244,12 +271,15 @@ public class FroggerGraphic extends JPanel implements IFroggerGraphics, KeyListe
 		setFrame(frame);
 		frame.setVisible(true);
 		frame.repaint();
+
+		/*
 		while(true){
 			Random random = new Random();
 			int nb;
 			nb = random.nextInt(255);
 			System.out.print(nb+".");
 		}
+		 */
 	}
 
 

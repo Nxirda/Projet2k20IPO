@@ -34,4 +34,5 @@ public interface IEnvironment {
 
 	public void setGame(Game game);
 
+	public boolean isInMatrix();
 }

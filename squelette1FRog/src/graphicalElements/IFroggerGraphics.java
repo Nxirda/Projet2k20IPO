@@ -3,6 +3,7 @@ package graphicalElements;
 import gameCommons.IFrog;
 
 import javax.swing.*;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 public interface IFroggerGraphics {

@@ -15,16 +15,33 @@ public class environment implements IEnvironment {
     public environment(Game game) {
         this.game = game;
         this.routes = new ArrayList();
-        this.routes.add(new Lane(game, 0, 0.0D));
+        this.routes.add(new Lane(game, 0, 0.0D,false));
 
         for(int i = 1; i < game.height ; ++i) {
-            if(i % 5 == 0){
-                this.routes.add(new Lane(game,i,0.0D));
-            }
-            else {
-                this.routes.add(new Lane(game, i));
+            if (i % 5 == 0) {
+                this.routes.add(new Lane(game, i, 0.0D, false));
+            } else {
+                if(3 == i) {
+                    this.routes.add(new Lane(game, i, true));
+                }else{
+                    this.routes.add(new Lane(game, i, false));
+
+                }
             }
         }
+    }
+
+    public boolean isInMatrix() {
+        for (int i = 0; i < this.routes.size(); i++) {
+            if (this.routes.get(i).getMatrx()) {
+                if (this.routes.get(i).getM().couvreCases(this.game.donneFrog().getPosition())) {
+
+
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public boolean isSafe(Case c) {
@@ -41,7 +58,7 @@ public class environment implements IEnvironment {
 
     public void update() {
         if (this.routes.size() <= this.game.height){
-            this.routes.add(new Lane(game,this.game.height, this.game.defaultDensity));
+            this.routes.add(new Lane(game,this.game.height, this.game.defaultDensity, false));
         }
         for(int i=0;i<this.routes.size();i++) {
             if(i%5 == 0){

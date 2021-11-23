@@ -21,6 +21,14 @@ public class Frog implements IFrog {
 		this.restart = false;
 	}
 
+	public boolean estDansCase(Case c){
+		if(maCase == c){
+			return true;
+		}
+		return false;
+	}
+
+
 	public void setRestart(boolean b){
 		restart = b;
 	}

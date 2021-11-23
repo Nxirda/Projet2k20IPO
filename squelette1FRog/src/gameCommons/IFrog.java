@@ -17,7 +17,6 @@ public interface IFrog {
 	 */
 	//public Direction getDirection();
 
-
 	//public void setGame(Game game);
 	/**
 	 * D�place la grenouille dans la direction donn�e et teste la fin de partie
@@ -31,10 +30,12 @@ public interface IFrog {
 
 	//public void setMaCase(Case case1);
 
-	//public boolean getEstEnVie();
+	public boolean getEstEnVie();
 
 	public void setRestart(boolean b);
 
 	public boolean getRestart();
+
+	public boolean estDansCase(Case c);
 
 }

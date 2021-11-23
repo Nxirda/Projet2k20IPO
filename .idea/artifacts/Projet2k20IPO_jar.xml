@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Projet2k20IPO:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Projet2k20IPO_jar</output-path>
+    <root id="archive" name="Projet2k20IPO.jar">
+      <element id="module-output" name="squelette1FRog" />
+      <element id="library" level="project" name="Projet2k20IPO" />
+    </root>
+  </artifact>
+</component>
